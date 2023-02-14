@@ -7,7 +7,7 @@ export const register = (user) => {
     try {
       const response = await publicRequest.post('/auth/register', user);
       dispatch(registerSuccess(response.data));
-    } catch (err) {
+    } catch (error) {
       dispatch(registerFailure());
     }
   };

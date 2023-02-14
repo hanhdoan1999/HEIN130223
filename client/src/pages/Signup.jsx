@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register } from '../store/register-actions';
@@ -7,6 +7,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   // const auth = useSelector((store) => store.auth);
   const register1 = useSelector((store) => store.register);
+  const [err, setErr] = useState('');
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const useNameRef = useRef();
@@ -21,29 +22,32 @@ const Signup = () => {
     const emailUser = emailUserRef.current.value;
     const password = passwordRef.current.value;
     const confirmPass = confirmPassRef.current.value;
-    if ((!firstName.trim() 
-    || !lastName.trim() 
-    || !userName.trim()
-    || !emailUser.trim()
-    || !password.trim()
-    || !confirmPass.trim())
-    && (password.trim() === confirmPass.trim())
-    ) return;
-    console.log("hanh123");
-    dispatch(
-      register({
-        username:userName ,
-        email: emailUser,
-        password,
-        isAdmin: false
-      })
-    );
-    firstNameRef.current.value = '';
-    lastNameRef.current.value = '';
-    useNameRef.current.value = '';
-    emailUserRef.current.value = '';
-    passwordRef.current.value = '';
-    confirmPassRef.current.value = '';
+    if ((firstName.trim() === ""
+    || lastName.trim() === ""
+    || userName.trim() === ""
+    || emailUser.trim() === ""
+    || password.trim() === ""
+    || confirmPass.trim()) === ""
+    || (password.trim() !== confirmPass.trim())
+    ) {
+      setErr("Nhập thông tin")
+    } else {
+      dispatch(
+        register({
+          username:userName ,
+          email: emailUser,
+          password,
+          isAdmin: false
+        })
+      );
+      firstNameRef.current.value = '';
+      lastNameRef.current.value = '';
+      useNameRef.current.value = '';
+      emailUserRef.current.value = '';
+      passwordRef.current.value = '';
+      confirmPassRef.current.value = '';
+      setErr("")
+    }
   };
 
   return (
@@ -104,6 +108,9 @@ const Signup = () => {
             Privacy policy
           </a>
         </p>
+        {err !== "" &&
+        <div className='mb-4 text-red-500'>{err}</div>
+        }
         <button className='mb-4 bg-teal-700 text-white p-2'>Create</button>
         <Link to='/login' className='capitalize underline mb-4'>
           Already have an account

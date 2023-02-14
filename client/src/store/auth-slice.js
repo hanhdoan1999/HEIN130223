@@ -19,10 +19,14 @@ const authSlice = createSlice({
     loginFailure(state) {
       state.isFetching = false;
       state.error = true;
-    }
+    },
+    logout(state, action) {
+      state.isFetching = false;
+      state.currentUser = action.payload;
+    },
   }
 });
 
-export const { loginStart, loginSuccess, loginFailure } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export default authSlice;

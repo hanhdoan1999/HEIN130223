@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   registerState: null,
   isFetching: false,
-  error: false
+  error: false,
 };
 const registerSlice = createSlice({
   name: 'register',
@@ -16,7 +16,7 @@ const registerSlice = createSlice({
       state.isFetching = false;
       state.registerState = action.payload;
     },
-    registerFailure(state) {
+    registerFailure(state,action) {
       state.isFetching = false;
       state.error = true;
     }

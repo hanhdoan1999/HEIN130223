@@ -2,16 +2,20 @@ import React from 'react';
 
 import { Badge } from '@mui/material';
 import { Search, ShoppingCart } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../store/auth-slice';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const totalQantity = useSelector((store) => store.cart.totalQantity);
   const auth = useSelector((store) => store.auth);
 
   const handleLogout = () => {
     console.log("handleLogout");
+    dispatch(logout(null))
   }
+  console.log(auth);
 
   return (
     <nav className='grid grid-cols-2 p-4 border-b font-semibold h-18'>
@@ -19,9 +23,9 @@ const Navbar = () => {
         <a href=''>Hein.</a>
       </h1>
       <div className='flex justify-end items-center px-4 text-md md:text-lg'>
-        {auth && auth?.currentUser?.userId!=="" ? 
+        {auth && auth?.currentUser !== null ? 
           <Link to='/' className='uppercase px-4 py-2' onClick={()=> handleLogout()}>
-            Logout
+            {auth?.currentUser?.userId} &nbsp; Logout
           </Link>
         :
         <>
