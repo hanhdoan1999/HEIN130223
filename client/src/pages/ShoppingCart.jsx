@@ -62,7 +62,7 @@ const ShoppingCart = () => {
           </div>
           <div>
             <StripeCheckout
-              name='HEIN.'
+              name='moony'
               billingAddress
               shippingAddress
               description={`Your total is ${cart.totalPrice}`}
